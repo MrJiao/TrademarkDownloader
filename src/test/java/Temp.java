@@ -1,8 +1,6 @@
-import com.jackson.domain.GetDocNumBean;
-import com.jackson.domain.GetPicBean;
-import com.jackson.domain.GetTrademarkBean;
-import com.jackson.domain.Row;
+import com.jackson.domain.*;
 import com.jackson.request.GetDocNum;
+import com.jackson.request.GetFunny;
 import com.jackson.request.GetImageUrl;
 import com.jackson.request.GetTrademarkList;
 import com.jackson.utils.ChineseUtil;
@@ -209,4 +207,19 @@ public class Temp {
         String simpleName = s.split("\\.")[0];
         L.i(simpleName);
     }
+    @Test
+    public void getFunny(){
+        CloseableHttpClient client = HttpClients.createDefault();
+        FunnyBean request = new GetFunny().request(client);
+        L.i(request);
+    }
+    @Test
+    public void funnyJson(){
+        FunnyBean funnyBean = new FunnyBean();
+        funnyBean.setErrorMsg(Arrays.asList("我是一个人","我是两个人"));
+        funnyBean.setQuestion(Arrays.asList("1234567","1234567"));
+        funnyBean.setId("");
+    }
+
+
 }

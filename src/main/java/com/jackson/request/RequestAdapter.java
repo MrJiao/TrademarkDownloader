@@ -40,7 +40,6 @@ public abstract class RequestAdapter<T> {
 
     private ObjectMapper mapper = new ObjectMapper();
 
-
     protected ObjectMapper getMapper() {
         return mapper;
     }
@@ -48,16 +47,17 @@ public abstract class RequestAdapter<T> {
 
 
 
-    private HttpPost post(String url, Map<String, String> param, Map<String, String> headers) throws UnsupportedEncodingException {
+    private HttpPost post(String url, Map<String, String> params, Map<String, String> headers) throws UnsupportedEncodingException {
         HttpPost httpPost = new HttpPost(url);
         for (Map.Entry<String, String> entry : headers.entrySet()) {
             httpPost.addHeader(entry.getKey(), entry.getValue());
         }
 
         List<NameValuePair> list = new ArrayList<>();
-
-        for (Map.Entry<String, String> entry : param.entrySet()) {
-            list.add(new BasicNameValuePair(entry.getKey(), entry.getValue()));
+        if(params!=null){
+            for (Map.Entry<String, String> entry : params.entrySet()) {
+                list.add(new BasicNameValuePair(entry.getKey(), entry.getValue()));
+            }
         }
 
         if (list.size() > 0) {
@@ -84,8 +84,10 @@ public abstract class RequestAdapter<T> {
         }
 
         HttpGet httpGet = new HttpGet(sb.toString());
-        for (Map.Entry<String, String> entry : headers.entrySet()) {
-            httpGet.addHeader(entry.getKey(), entry.getValue());
+        if(headers!=null){
+            for (Map.Entry<String, String> entry : headers.entrySet()) {
+                httpGet.addHeader(entry.getKey(), entry.getValue());
+            }
         }
         return httpGet;
     }
