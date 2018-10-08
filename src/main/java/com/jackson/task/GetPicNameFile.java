@@ -2,6 +2,7 @@ package com.jackson.task;
 
 import com.jackson.config.AnnConfigManager;
 import com.jackson.domain.TaskFolderState;
+import com.jackson.utils.ChineseUtil;
 import org.apache.commons.io.FileUtils;
 
 import java.io.File;
@@ -52,6 +53,6 @@ public class GetPicNameFile implements Runnable {
         String name = file.getName();
         String s = name.split("__")[1];
         String simpleName = s.split("\\.")[0];
-        return simpleName;
+        return ChineseUtil.removeChinese(simpleName);
     }
 }

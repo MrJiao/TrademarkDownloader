@@ -21,7 +21,9 @@ public class ChineseUtil {
      * 全中文判断
      */
     private static final String CONTENT_CHINESE_REGEX = "^[\u4e00-\u9fa5]+$";
+    private static final String MATCH_CONTENT_CHINESE_REGEX = "[\u4e00-\u9fa5]";
     private static final Pattern CONTENT_CHINESE_PATTERN = Pattern.compile(CONTENT_CHINESE_REGEX);
+    private static final Pattern MATCH_CONTENT_CHINESE__PATTERN = Pattern.compile(MATCH_CONTENT_CHINESE_REGEX);
 
 
     /**
@@ -36,6 +38,11 @@ public class ChineseUtil {
         }
         Matcher matcher = CONTENT_CHINESE_PATTERN.matcher(str.trim());
         return matcher.matches();
+    }
+
+    public static String removeChinese(String str){
+        Matcher mat=MATCH_CONTENT_CHINESE__PATTERN.matcher(str);
+        return mat.replaceAll("");
     }
 
 }

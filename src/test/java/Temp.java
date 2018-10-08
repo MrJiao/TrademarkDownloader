@@ -18,6 +18,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Create by: Jackson
@@ -202,23 +204,39 @@ public class Temp {
 
     @Test
     public void simpleName(){
-        String name = "1614__PANERAI.jpg";
+        String name = "1614__里查德米尔RICHARD MILLE里查.jpg";
         String s = name.split("__")[1];
         String simpleName = s.split("\\.")[0];
-        L.i(simpleName);
+
+
+        String str = simpleName;
+
+       // String reg = "[\u4e00-\u9fa5]";
+        String reg = "^[\u4e00-\u9fa5]+$";
+
+        Pattern pat = Pattern.compile(reg);
+
+        Matcher mat=pat.matcher(str);
+
+        String repickStr = mat.replaceAll("");
+
+        L.i("去中文后:"+repickStr);
+
     }
+
     @Test
     public void getFunny(){
         CloseableHttpClient client = HttpClients.createDefault();
         FunnyBean request = new GetFunny().request(client);
         L.i(request);
     }
+
     @Test
     public void funnyJson(){
         FunnyBean funnyBean = new FunnyBean();
         funnyBean.setErrorMsg(Arrays.asList("我是一个人","我是两个人"));
         funnyBean.setQuestion(Arrays.asList("1234567","1234567"));
-        funnyBean.setId("");
+        funnyBean.setId("1");
     }
 
 
