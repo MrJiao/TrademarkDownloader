@@ -11,15 +11,19 @@
 
     var wordArr;//点击确定后切割好的单词，按行切割
     var word_position = 0;//当前的单词
-    var trDom = ['<input type="button" id="jackson_paramShow"  style="position: fixed; top: 50px;right:0px;"  value="参数设置">'].join("");
+    //var trDom = ['<input type="button" id="jackson_paramShow"  style="position: fixed; top: 50px;right:0px;"  value="参数设置">'].join("");
+    var trDom = ['<input type="button" id="btn_jackson_paramHide" style="position: fixed; top: 35px;right:15px;height:30px;display:none" value="关">',
+        '<input type="button" id="btn_jackson_paramShow" style="position: fixed; top: 80px;right:15px;height:30px;" value="开">'].join("");
 
-    var paramDiv = ['<div id="jackson_paramDiv" style="position: fixed;top: 50px;right:-350px;border: 0px solid;">',
+    var paramDiv = [
+        // '<div id="jackson_paramDiv" style="position: fixed;top: 50px;right:-350px;border: 0px solid;">',
+        '<div id="jackson_paramDiv" style="position: fixed;top: 90px;right:15px;border: 0px solid;display:none">',
         '    <div style="">',
         '        <p>全部参数</p >',
         '        <textarea id="allText" style="height: 100px;width: 130px"></textarea>',
         '		<br>',
         '    </div>',
-        '    <input type="button" id="jackson_btnSave"  value="保存">',
+        '    <input type="button" id="jackson_btnSave"  style="top:150px" value="保存">',
         '</div>'
     ].join("");
 
@@ -48,12 +52,12 @@
     $("body").append(resultHaveDivStr);
     $("body").append(resultNoneDivStr);
     var trDom2 = ['<div style="position: fixed; top: 270px;right:0px;border: 1px solid;width:160px">',
-        '	<p id="current_word">文件名称</p><br>',
-        '	<input type="button" id="jackson_search"   value="搜索" style="height: 300px;width: 50px">',
-        '	<input type="button" id="jackson_copy"   value="复制" style="height: 300px;width: 50px">',
+        ' <div style=" text-align:center;font-size: 20px;">	<p style="font-size: 20px;" id="current_word" >文件名称</p></div>',
+        '	<input type="button" id="jackson_search"   value="搜索" style="height: 500px;width: 50px">',
+        '	<input type="button" id="jackson_copy"   value="复制" style="height: 500px;width: 50px">',
         //'	<input type="button" id="jackson_has"   value="有" style="height: 300px;width: 50px">',
         //'	<input type="button" id="jackson_no"   value="没有" style="height: 300px;width: 50px"><br>',
-        '	<input type="button" id="jackson_oneMore"   value="上一个" style="height: 300px;width: 50px">',
+        '	<input type="button" id="jackson_oneMore"   value="上一个" style="height: 500px;width: 50px">',
 
 
         '</div>'].join("");
@@ -67,6 +71,22 @@
     $("#jackson_has").on('click', jackson_Have);
     $("#jackson_no").on('click', jackson_None);
     $("#jackson_btnSave").click(saveWordArr);
+
+    //按钮文案"参数配置"-->"开"
+    //显示按钮"关"
+    $("#btn_jackson_paramShow").on("click", toggle_click_show);
+    $("#btn_jackson_paramHide").on("click", toggle_click_hide);
+
+    function toggle_click_show() {
+        $("#btn_jackson_paramHide").show();
+        $("#jackson_paramDiv").show();
+
+    }
+
+    function toggle_click_hide() {
+        $("#jackson_paramDiv").hide();
+    }
+
 
     /*    $(document).keyup(function (event) {
             if (event.ctrlKey && event.keyCode === 13) {
