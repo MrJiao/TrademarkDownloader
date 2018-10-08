@@ -108,6 +108,9 @@ public class Main {
                     rename(taskFolderState);
                     getPicNameFile(taskFolderState);
                 }
+                if(taskFolderState.isGetImageUrl()&&taskFolderState.isDownloadImage()&&taskFolderState.isGetTrademarkRow()&&taskFolderState.isRename()&&!taskFolderState.isGetPicNameFile()){
+                    getPicNameFile(taskFolderState);
+                }
             }
             completeHandle();
         }
@@ -153,6 +156,7 @@ public class Main {
             String imageFolderPath = taskFolderState.getFolderPath();
             String trademarkRowFilePath = AnnConfigManager.instance.getTrademarkRowFilePath(taskFolderState);
             new ReNameTask(imageFolderPath,trademarkRowFilePath,taskFolderState).run();
+            taskFolderState.storeRename(true);
             L.i("完成重名图片");
         }
 

@@ -25,6 +25,7 @@ public class TaskFolderState {
     public static final String properties_isDownloadImage = "isDownloadImage";
     public static final String properties_isGetTrademarkRow = "isGetTrademarkRow";
     public static final String properties_isRename = "isRename";
+    public static final String properties_isGetPicNameFile = "isGetPicNameFile";
 
     String folderName;
     String folderPath;
@@ -65,6 +66,7 @@ public class TaskFolderState {
     boolean isDownloadImage;
     boolean isRename;
     boolean isGetTrademarkRow;
+    boolean isGetPicNameFile;
 
     public boolean isGetTrademarkRow() {
         return isGetTrademarkRow;
@@ -163,6 +165,19 @@ public class TaskFolderState {
         isRename = rename;
     }
 
+    public boolean isGetPicNameFile() {
+        return isGetPicNameFile;
+    }
+
+    public void setGetPicNameFile(boolean getPicNameFile) {
+        isGetPicNameFile = getPicNameFile;
+    }
+
+    public void storeGetPicNameFile(boolean rename) {
+        storeProperties(properties_isGetPicNameFile, rename + "");
+        isRename = rename;
+    }
+
     private void storeProperties(String key, String value) {
         File file = new File(folderPath + File.separator + "config", "task.properties");
         if (!file.exists()) throw new RuntimeException("TaskFolderState配置文件不见了，删除" + getFolderName() + " 后重试");
@@ -197,6 +212,7 @@ public class TaskFolderState {
                 properties.setProperty(TaskFolderState.properties_isGetImageUrl, isGetImageUrl()+"");
                 properties.setProperty(TaskFolderState.properties_isGetImageDocNum, isGetImageDocNum()+"");
                 properties.setProperty(TaskFolderState.properties_isRename, isRename()+"");
+                properties.setProperty(TaskFolderState.properties_isGetPicNameFile, isGetPicNameFile()+"");
                 properties.setProperty(TaskFolderState.properties_isGetTrademarkRow, isGetTrademarkRow() + "");
                 properties.setProperty(TaskFolderState.properties_end_image_page_num, getEndImagePageNum() + "");
                 properties.setProperty(TaskFolderState.properties_start_image_page_num, getStartImagePageNum() + "");

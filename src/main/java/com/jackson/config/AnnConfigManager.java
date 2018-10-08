@@ -195,6 +195,7 @@ public enum AnnConfigManager {
             folderState.setGetImageDocNum(Boolean.parseBoolean(properties.getProperty(TaskFolderState.properties_isGetImageDocNum)));
             folderState.setDownloadImage(Boolean.parseBoolean(properties.getProperty(TaskFolderState.properties_isDownloadImage)));
             folderState.setRename(Boolean.parseBoolean(properties.getProperty(TaskFolderState.properties_isRename)));
+            folderState.setGetPicNameFile(Boolean.parseBoolean(properties.getProperty(TaskFolderState.properties_isGetPicNameFile)));
             folderState.setGetTrademarkRow(Boolean.parseBoolean(properties.getProperty(TaskFolderState.properties_isGetTrademarkRow)));
             folderState.setFolderName(f.getName());
             folderState.setFolderPath(f.getAbsolutePath());

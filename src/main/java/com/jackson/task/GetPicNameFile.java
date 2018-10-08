@@ -46,13 +46,14 @@ public class GetPicNameFile implements Runnable {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
+        taskFolderState.storeGetPicNameFile(true);
     }
 
     public String getSimpleName(File file){
         String name = file.getName();
         String s = name.split("__")[1];
         String simpleName = s.split("\\.")[0];
-        return ChineseUtil.removeChinese(simpleName);
+        simpleName = ChineseUtil.removeChinese(simpleName);
+        return simpleName.trim();
     }
 }
