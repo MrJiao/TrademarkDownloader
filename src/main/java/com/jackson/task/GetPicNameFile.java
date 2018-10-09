@@ -4,6 +4,7 @@ import com.jackson.config.AnnConfigManager;
 import com.jackson.domain.TaskFolderState;
 import com.jackson.utils.ChineseUtil;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
 import java.io.FileFilter;
@@ -37,7 +38,9 @@ public class GetPicNameFile implements Runnable {
 
         ArrayList<String> arr = new ArrayList<>();
         for (File picFile : picFiles) {
-            arr.add(getSimpleName(picFile));
+            String simpleName = getSimpleName(picFile);
+            if(StringUtils.isEmpty(simpleName))continue;
+            arr.add(simpleName);
         }
         try {
             FileUtils.writeLines(
@@ -54,6 +57,7 @@ public class GetPicNameFile implements Runnable {
         String s = name.split("__")[1];
         String simpleName = s.split("\\.")[0];
         simpleName = ChineseUtil.removeChinese(simpleName);
+
         return simpleName.trim();
     }
 }

@@ -1,7 +1,7 @@
 // ==UserScript==
-// @name         老婆我喜欢你
+// @name         爱心小拳拳
 // @namespace    http://tampermonkey.net/
-// @version      0.1
+// @version      2018.10.09
 // @description  爱心小拳拳
 // @author       Jackson
 // @match        https://euipo.europa.eu/eSearch/
@@ -51,25 +51,19 @@
     $("body").append(paramDiv);
     $("body").append(resultHaveDivStr);
     $("body").append(resultNoneDivStr);
-    var trDom2 = ['<div style="position: fixed; top: 270px;right:0px;border: 1px solid;width:160px">',
-        ' <div style=" text-align:center;font-size: 20px;">	<p style="font-size: 20px;" id="current_word" >文件名称</p></div>',
-        '	<input type="button" id="jackson_search"   value="搜索" style="height: 500px;width: 50px">',
-        '	<input type="button" id="jackson_copy"   value="复制" style="height: 500px;width: 50px">',
-        //'	<input type="button" id="jackson_has"   value="有" style="height: 300px;width: 50px">',
-        //'	<input type="button" id="jackson_no"   value="没有" style="height: 300px;width: 50px"><br>',
-        '	<input type="button" id="jackson_oneMore"   value="上一个" style="height: 500px;width: 50px">',
-
-
+    var trDom2 = ['<div style="position: fixed; top: 270px;right:0px;width:160px">',
+        ' <div style=" text-align:center;font-size: 20px;">	<p style="font-size: 20px;" id="current_word" >先保存</p></div>',
+        '	<input type="button" id="jackson_search"   value="搜索" style="height: 500px;width: 100px">',
+        // '	<input type="button" id="jackson_copy"   value="复制" style="height: 500px;width: 50px">',
+        '	<input type="button" id="jackson_pre"   value="上一个" style="height: 500px;width: 50px">',
         '</div>'].join("");
     $("body").append(trDom2);
 
 
     $("#jackson_copy").on('click', jackson_copy);
-    $("#jackson_oneMore").on('click', jackson_pre);
+    $("#jackson_pre").on('click', jackson_pre);
 
     $("#jackson_search").on('click', jackson_search);
-    $("#jackson_has").on('click', jackson_Have);
-    $("#jackson_no").on('click', jackson_None);
     $("#jackson_btnSave").click(saveWordArr);
 
     //按钮文案"参数配置"-->"开"
@@ -86,16 +80,6 @@
     function toggle_click_hide() {
         $("#jackson_paramDiv").hide();
     }
-
-
-    /*    $(document).keyup(function (event) {
-            if (event.ctrlKey && event.keyCode === 13) {
-                $(".doSearchBt.btn.btn-primary.btn-large")[0].click();
-                startLooper();
-            }
-
-            console.log(event.keyCode);
-        });*/
 
     function copyToClipboard(text) {
         console.log("copyToClipboard " + text);
@@ -131,7 +115,11 @@
     }
 
     function setFocus() {
-        $("input[name='MarkVerbalElementText']").focus();
+        getSearchInput().focus();
+    }
+
+    function getSearchInput(){
+        return $("input[name='MarkVerbalElementText']");
     }
 
     function jackson_copy() {
@@ -146,6 +134,7 @@
         word_position = 0;
         var word = myCurrentWord();
         $("#current_word").text(word);
+        copyToClipboard(myCurrentWord());
     }
 
     function nextWord() {
@@ -158,6 +147,18 @@
         return word;
     }
 
+
+    function getNextWord() {
+        temp_word_position = word_position;
+        temp_word_position++;
+        if (temp_word_position > wordArr.length - 1) {
+            temp_word_position = wordArr.length - 1;
+            alert("已经到最后一个了");
+        }
+        var word = wordArr[temp_word_position];
+        return word;
+    }
+
     function myCurrentWord() {
         return wordArr[word_position];
     }
@@ -166,6 +167,7 @@
         word_position--;
         if (word_position <= 0) {
             word_position = 0;
+            alert("已经到第一个了");
         }
         var word = wordArr[word_position];
         console.log("prevWord:" + word);
@@ -173,8 +175,11 @@
     }
 
     function auto_pre_search() {
+        // $(".doSearchBt.btn.btn-primary.btn-large").hide();
+        // $(".resetToDefaultBt.btn.btn-large.search-button").hide();
+        // $(".clearCriteriaBt.btn.btn-large.search-button").hide();
         $(".doSearchBt.btn.btn-primary.btn-large")[0].click();
-        $("input[name='MarkVerbalElementText']").val("");
+        getSearchInput().val("");
         setFocus();
     }
 
@@ -210,19 +215,41 @@
     }
 
     function jackson_search() {
+        var jqSearchInput = getSearchInput();
+        if(jqSearchInput == undefined){
+            setFocus();
+            return;
+        }
+        if(strIsEmpty(jqSearchInput.val())){
+            setFocus();
+            return;
+        }
+        copyToClipboard(getNextWord());
         $(".doSearchBt.btn.btn-primary.btn-large")[0].click();
-        startLooper();
+        getSearchInput().val("");
+        starTimmer();
+    }
+
+    function strIsEmpty(obj){
+        if(typeof obj == "undefined" || obj == null || obj == ""){
+            return true;
+        }else{
+            return false;
+        }
     }
 
 
     function exitTimmer() {
         console.log("exitTimmer");
         clearInterval(timer);
+        isTimerStar = false;
     }
 
     var timer;
-
+    var isTimerStar = false;
     function starTimmer() {
+        if(isTimerStar)return;
+        isTimerStar = true;
         console.log("starTimmer");
         timer = setInterval(function () {
             if ($(".flOverlay")[0] != undefined) {
@@ -230,13 +257,12 @@
                 return;
             }
             if ($("div.searchInfo.pull-right")[0] == undefined) {
-                exitTimmer();
                 jackson_None();
             } else {
-                exitTimmer();
                 jackson_Have();
                 //$("div.searchInfo.pull-right").html().trim().split(" ")[0];
             }
+            exitTimmer();
         }, 200);
     }
 
@@ -248,7 +274,7 @@
 
     function startLooper() {
         console.log("looper");
-        sleep(1000).next().value.then(() => {
+        sleep(200).next().value.then(() => {
             if ($(".flOverlay")[0] != undefined) {
                 console.log("还在搜索");
                 startLooper();
