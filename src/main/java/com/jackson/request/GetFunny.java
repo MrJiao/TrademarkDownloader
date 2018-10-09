@@ -1,6 +1,6 @@
 package com.jackson.request;
 
-import com.jackson.domain.FunnyQuestion;
+import com.jackson.funny.domain.FunnyQuestion;
 import org.apache.http.HttpEntity;
 
 import java.util.HashMap;

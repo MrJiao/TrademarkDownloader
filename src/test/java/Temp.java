@@ -1,4 +1,5 @@
 import com.jackson.domain.*;
+import com.jackson.funny.domain.FunnyQuestion;
 import com.jackson.request.GetDocNum;
 import com.jackson.request.GetFunny;
 import com.jackson.request.GetImageUrl;
@@ -234,8 +235,8 @@ public class Temp {
     @Test
     public void funnyJson(){
         FunnyQuestion funnyQuestion = new FunnyQuestion();
-        funnyQuestion.setErrorMsg(Arrays.asList("我是一个人","我是两个人"));
-        funnyQuestion.setQuestion(Arrays.asList("1234567","1234567"));
+        funnyQuestion.setErrorMsgList(Arrays.asList("我是一个人","我是两个人"));
+        funnyQuestion.setQuestionList(Arrays.asList("1234567","1234567"));
         funnyQuestion.setId("1");
     }
 
