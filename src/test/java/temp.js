@@ -37,7 +37,7 @@
         '</div>'
     ].join("");
 
-    var resultNoneDivStr = ['<div id="jackson_resultNone" style="position: fixed;top: 300px;left:5px;border: 0px solid;">',
+    var resultNoneDivStr = ['<div id="jackson_resultNone" style="position: fixed;top: 200px;left:5px;border: 0px solid;">',
         '    <div style="">',
         '        <p>搜索无结果的名称</p >',
         '        <textarea id="jackson_resultNone_textarea" style="height: 100px;width: 130px"></textarea>',
@@ -46,11 +46,21 @@
         '</div>'
     ].join("");
 
+    var mathContainer = ['<div id="jackson_mathContainer" style="position: fixed;top: 350px;left:5px;border: 0px solid;">',
+        '    <div style="">',
+        '	<input type="button" id="id_exclude"   value="排除已经查询过的结果" style="width: 100px">',
+        '        <p>还没有查询的数据</p >',
+        '        <textarea id="jackson_mathContainer_textarea" style="height: 100px;width: 130px"></textarea>',
+        '		<br>',
+        '    </div>',
+        '</div>'
+    ].join("");
 
     $("body").append(trDom);
     $("body").append(paramDiv);
     $("body").append(resultHaveDivStr);
     $("body").append(resultNoneDivStr);
+    $("body").append(mathContainer);
     var trDom2 = ['<div style="position: fixed; top: 270px;right:0px;width:160px">',
         ' <div style=" text-align:center;font-size: 20px;">	<p style="font-size: 20px;" id="current_word" >先保存</p></div>',
         '	<input type="button" id="jackson_search"   value="搜索" style="height: 500px;width: 100px">',
@@ -70,6 +80,7 @@
     //显示按钮"关"
     $("#btn_jackson_paramShow").on("click", toggle_click_show);
     $("#btn_jackson_paramHide").on("click", toggle_click_hide);
+    $("#id_exclude").on("click", jackson_exclude);
 
     function toggle_click_show() {
         $("#btn_jackson_paramHide").show();
@@ -118,7 +129,7 @@
         getSearchInput().focus();
     }
 
-    function getSearchInput(){
+    function getSearchInput() {
         return $("input[name='MarkVerbalElementText']");
     }
 
@@ -216,11 +227,11 @@
 
     function jackson_search() {
         var jqSearchInput = getSearchInput();
-        if(jqSearchInput == undefined){
+        if (jqSearchInput == undefined) {
             setFocus();
             return;
         }
-        if(strIsEmpty(jqSearchInput.val())){
+        if (strIsEmpty(jqSearchInput.val())) {
             setFocus();
             return;
         }
@@ -230,10 +241,52 @@
         starTimmer();
     }
 
-    function strIsEmpty(obj){
-        if(typeof obj == "undefined" || obj == null || obj == ""){
+    function jackson_exclude() {
+        var resultStr = $("#jackson_resultHave_textarea").val();
+        var noneStr = $("#jackson_resultNone_textarea").val();
+        var resultArr = resultStr.split("\n");
+        var noneArr = noneStr.split("\n");
+        var excludeArr = new Set(wordArr);
+        wordArr.forEach(function (wordArrelement, wordArrindex, wordArrarray) {
+            // element: 指向当前元素的值
+            // index: 指向当前索引
+            // array: 指向Array对象本身
+            resultArr.forEach(function (resultArrelement, resultArrindex, resultArrarray) {
+                if (wordArrelement == resultArrelement) {
+                    excludeArr.delete(wordArrelement);
+                    return;
+                }
+            });
+        });
+        wordArr.forEach(function (wordArrelement, wordArrindex, wordArrarray) {
+            // element: 指向当前元素的值
+            // index: 指向当前索引
+            // array: 指向Array对象本身
+            noneArr.forEach(function (noneArrelement, noneArrindex, noneArrarray) {
+                if (wordArrelement == noneArrelement) {
+                    excludeArr.delete(wordArrelement);
+                    return;
+                }
+            });
+        });
+
+
+        var excludeArrStr = "";
+        excludeArr.forEach(function (excludeArrelement, wordArrindex, wordArrarray) {
+            // element: 指向当前元素的值
+            // index: 指向当前索引
+            // array: 指向Array对象本身
+            excludeArrStr += excludeArrelement + "\r\n";
+        });
+
+        $("#jackson_mathContainer_textarea").val(excludeArrStr);
+
+    }
+
+    function strIsEmpty(obj) {
+        if (typeof obj == "undefined" || obj == null || obj == "") {
             return true;
-        }else{
+        } else {
             return false;
         }
     }
@@ -247,8 +300,9 @@
 
     var timer;
     var isTimerStar = false;
+
     function starTimmer() {
-        if(isTimerStar)return;
+        if (isTimerStar) return;
         isTimerStar = true;
         console.log("starTimmer");
         timer = setInterval(function () {
@@ -257,7 +311,11 @@
                 return;
             }
             if ($("div.searchInfo.pull-right")[0] == undefined) {
-                jackson_None();
+                if ($(".alert.alert-ohim.alert-error")[0] == undefined) {
+                    jackson_None();
+                } else {
+                    alert("不要多次查询重复的词，会被限制，严重的会封IP");
+                }
             } else {
                 jackson_Have();
                 //$("div.searchInfo.pull-right").html().trim().split(" ")[0];
