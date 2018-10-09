@@ -11,7 +11,6 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.*;
 
@@ -197,6 +196,7 @@ public enum AnnConfigManager {
             folderState.setRename(Boolean.parseBoolean(properties.getProperty(TaskFolderState.properties_isRename)));
             folderState.setGetPicNameFile(Boolean.parseBoolean(properties.getProperty(TaskFolderState.properties_isGetPicNameFile)));
             folderState.setGetTrademarkRow(Boolean.parseBoolean(properties.getProperty(TaskFolderState.properties_isGetTrademarkRow)));
+            folderState.setImageScreening(Boolean.parseBoolean(properties.getProperty(TaskFolderState.properties_isImageScreening)));
             folderState.setFolderName(f.getName());
             folderState.setFolderPath(f.getAbsolutePath());
 
@@ -210,6 +210,10 @@ public enum AnnConfigManager {
 
     public String getImageUrlFilePath(TaskFolderState taskFolderState) {
         return taskFolderState.getFolderPath() + File.separator + "config" + File.separator + "image_url.txt";
+    }
+
+    public String getImageScreeningFilePath(TaskFolderState taskFolderState) {
+        return taskFolderState.getFolderPath() + File.separator + "config" + File.separator + "image_screening.txt";
     }
 
     public String getDocNumFilePath(TaskFolderState taskFolderState) {
@@ -228,7 +232,7 @@ public enum AnnConfigManager {
         return trademarkConfig;
     }
 
-    public String getImageEnglishFolder(TaskFolderState taskFolderState) {
+    public String getImageEnglishFolderPath(TaskFolderState taskFolderState) {
         return taskFolderState.getFolderPath() + File.separator + "english";
     }
 
@@ -237,8 +241,14 @@ public enum AnnConfigManager {
     }
 
     public String getPicNameFilePath(TaskFolderState taskFolderState) {
-        return getImageEnglishFolder(taskFolderState)+File.separator+"imageNames.txt";
+        return getImageEnglishFolderPath(taskFolderState)+File.separator+"imageNames.txt";
     }
+
+    public String getImageScreeningFolderPath(TaskFolderState taskFolderState) {
+        return taskFolderState.getFolderPath() + File.separator + "image_screening";
+    }
+
+
 
 
     private static class MComparator implements Comparator<TaskFolderState> {

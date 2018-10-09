@@ -7,44 +7,25 @@ import java.util.List;
  */
 public class FunnyBean {
 
+    String title;
 
-    String id;
+    String content;
 
-    List<String> question;
+    List<FunnyQuestion> funnyQuestionList;
 
-    List<String> errorMsg;
-
-    FunnyBean child;
-
-    public FunnyBean getChild() {
-        return child;
+    public String getTitle() {
+        return title;
     }
 
-    public void setChild(FunnyBean child) {
-        this.child = child;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public String getId() {
-        return id;
+    public List<FunnyQuestion> getFunnyQuestionList() {
+        return funnyQuestionList;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public List<String> getQuestion() {
-        return question;
-    }
-
-    public void setQuestion(List<String> question) {
-        this.question = question;
-    }
-
-    public List<String> getErrorMsg() {
-        return errorMsg;
-    }
-
-    public void setErrorMsg(List<String> errorMsg) {
-        this.errorMsg = errorMsg;
+    public void setFunnyQuestionList(List<FunnyQuestion> funnyQuestionList) {
+        this.funnyQuestionList = funnyQuestionList;
     }
 }

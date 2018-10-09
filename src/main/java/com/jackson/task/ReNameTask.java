@@ -2,7 +2,7 @@ package com.jackson.task;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jackson.config.AnnConfigManager;
-import com.jackson.config.EncodConfig;
+import com.jackson.config.EncodeConfig;
 import com.jackson.domain.MyImageFile;
 import com.jackson.domain.Row;
 import com.jackson.domain.TaskFolderState;
@@ -43,6 +43,7 @@ public class ReNameTask implements Runnable {
 
     @Override
     public void run() {
+        L.i("开始重命名图片");
         initFolder();
         //读出当前的图片名称和对应的地址
         initRow();
@@ -81,7 +82,7 @@ public class ReNameTask implements Runnable {
                 if (ChineseUtil.isChinese(row.getTm_name())){
                     storePath = AnnConfigManager.instance.getImageChineseFolder(taskFolderState);
                 }else {
-                    storePath = AnnConfigManager.instance.getImageEnglishFolder(taskFolderState);
+                    storePath = AnnConfigManager.instance.getImageEnglishFolderPath(taskFolderState);
                 }
 
                 try {
@@ -98,10 +99,11 @@ public class ReNameTask implements Runnable {
                 rowIndex++;
             }
         }
+        L.i("重命名图片完成");
     }
 
     private void initFolder() {
-        String imageEnglishFolderPath = AnnConfigManager.instance.getImageEnglishFolder(taskFolderState);
+        String imageEnglishFolderPath = AnnConfigManager.instance.getImageEnglishFolderPath(taskFolderState);
         String chineseFolderPath = AnnConfigManager.instance.getImageChineseFolder(taskFolderState);
 
         File imageEnglishFolder = new File(imageEnglishFolderPath);
@@ -127,7 +129,7 @@ public class ReNameTask implements Runnable {
 
     private void initRow() {
         try {
-            List<String> rowStrList = FileUtils.readLines(new File(rowFilePath), EncodConfig.ENCODE);
+            List<String> rowStrList = FileUtils.readLines(new File(rowFilePath), EncodeConfig.ENCODE);
             for (String rowStr : rowStrList) {
                 rowList.add(mapper.readValue(rowStr, Row.class));
             }

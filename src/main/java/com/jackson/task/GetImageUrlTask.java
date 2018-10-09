@@ -55,6 +55,7 @@ public class GetImageUrlTask implements Runnable {
 
     @Override
     public void run() {
+        L.d("开始获取图片url");
         AnnTaskConfig annTaskConfig = AnnConfigManager.instance.getAnnTaskConfig();
         try {
 
@@ -89,6 +90,7 @@ public class GetImageUrlTask implements Runnable {
                 }
                 current += pageSize;
             }
+            L.d("获取图片url完成");
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

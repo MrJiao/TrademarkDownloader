@@ -1,7 +1,7 @@
 package com.jackson.task;
 
 import com.jackson.config.AnnConfigManager;
-import com.jackson.config.EncodConfig;
+import com.jackson.config.EncodeConfig;
 import com.jackson.core.MyRetryTemplate;
 import com.jackson.core.WaitStrategy;
 import com.jackson.domain.GetDocNumBean;
@@ -38,7 +38,7 @@ public class DownImageAndDocNumTask implements Runnable {
         List<String> urlList = MyRetryTemplate.retryTemplate(3,1000,new MyRetryTemplate.RetryCallback<List<String>>() {
             @Override
             public List<String> doFunction() throws Exception {
-                return FileUtils.readLines(imageUrlFile, EncodConfig.ENCODE);
+                return FileUtils.readLines(imageUrlFile, EncodeConfig.ENCODE);
             }
         });
 

@@ -26,6 +26,7 @@ public class TaskFolderState {
     public static final String properties_isGetTrademarkRow = "isGetTrademarkRow";
     public static final String properties_isRename = "isRename";
     public static final String properties_isGetPicNameFile = "isGetPicNameFile";
+    public static final String properties_isImageScreening = "isImageScreening";
 
     String folderName;
     String folderPath;
@@ -67,6 +68,20 @@ public class TaskFolderState {
     boolean isRename;
     boolean isGetTrademarkRow;
     boolean isGetPicNameFile;
+    boolean isImageScreening;
+
+    public boolean isImageScreening() {
+        return isImageScreening;
+    }
+
+    public void setImageScreening(boolean imageScreening) {
+        isImageScreening = imageScreening;
+    }
+
+    public void storeImageScreening(boolean isImageScreening) {
+        storeProperties(properties_isImageScreening, isImageScreening + "");
+        this.isImageScreening = isImageScreening;
+    }
 
     public boolean isGetTrademarkRow() {
         return isGetTrademarkRow;
@@ -173,9 +188,9 @@ public class TaskFolderState {
         isGetPicNameFile = getPicNameFile;
     }
 
-    public void storeGetPicNameFile(boolean rename) {
-        storeProperties(properties_isGetPicNameFile, rename + "");
-        isRename = rename;
+    public void storeGetPicNameFile(boolean isGetPicNameFile) {
+        storeProperties(properties_isGetPicNameFile, isGetPicNameFile + "");
+        this.isGetPicNameFile = isGetPicNameFile;
     }
 
     private void storeProperties(String key, String value) {
@@ -214,6 +229,7 @@ public class TaskFolderState {
                 properties.setProperty(TaskFolderState.properties_isRename, isRename()+"");
                 properties.setProperty(TaskFolderState.properties_isGetPicNameFile, isGetPicNameFile()+"");
                 properties.setProperty(TaskFolderState.properties_isGetTrademarkRow, isGetTrademarkRow() + "");
+                properties.setProperty(TaskFolderState.properties_isImageScreening, isImageScreening() + "");
                 properties.setProperty(TaskFolderState.properties_end_image_page_num, getEndImagePageNum() + "");
                 properties.setProperty(TaskFolderState.properties_start_image_page_num, getStartImagePageNum() + "");
                 properties.setProperty(TaskFolderState.properties_end_trademark_page_num, getEndTrademarkPageNum() + "");

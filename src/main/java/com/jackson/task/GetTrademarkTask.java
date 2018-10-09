@@ -52,6 +52,7 @@ public class GetTrademarkTask implements Runnable {
 
     @Override
     public void run() {
+        L.i("开始获取Trademark");
         TrademarkConfig trademarkConfig = AnnConfigManager.instance.getTrademarkConfig();
         try {
             for (int i = startPage; i < endPage; i++) {
@@ -62,6 +63,7 @@ public class GetTrademarkTask implements Runnable {
             }
             Collections.sort(rowList);
             callBack.onTaskSuccess(rowList);
+            L.i("获取Trademark完成");
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

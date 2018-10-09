@@ -3,6 +3,7 @@ package com.jackson.task;
 import com.jackson.config.AnnConfigManager;
 import com.jackson.domain.TaskFolderState;
 import com.jackson.utils.ChineseUtil;
+import com.jackson.utils.L;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 
@@ -22,13 +23,14 @@ public class GetPicNameFile implements Runnable {
     TaskFolderState taskFolderState;
 
     public GetPicNameFile(TaskFolderState taskFolderState) {
-        this.picfolder = new File(AnnConfigManager.instance.getImageEnglishFolder(taskFolderState));
+        this.picfolder = new File(AnnConfigManager.instance.getImageEnglishFolderPath(taskFolderState));
         this.taskFolderState = taskFolderState;
     }
 
 
     @Override
     public void run() {
+        L.d("开始整理图片名");
         File[] picFiles = picfolder.listFiles(new FileFilter() {
             @Override
             public boolean accept(File pathname) {
@@ -46,10 +48,12 @@ public class GetPicNameFile implements Runnable {
             FileUtils.writeLines(
                     new File( AnnConfigManager.instance.getPicNameFilePath(taskFolderState))
                     ,arr,false);
+            taskFolderState.storeGetPicNameFile(true);
+            L.d("整理图片名完成");
         } catch (IOException e) {
-            e.printStackTrace();
+            L.e(e);
+            L.e("整理图片名失败");
         }
-        taskFolderState.storeGetPicNameFile(true);
     }
 
     public String getSimpleName(File file){

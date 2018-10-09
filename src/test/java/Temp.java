@@ -227,16 +227,16 @@ public class Temp {
     @Test
     public void getFunny(){
         CloseableHttpClient client = HttpClients.createDefault();
-        FunnyBean request = new GetFunny().request(client);
+        FunnyQuestion request = new GetFunny().request(client);
         L.i(request);
     }
 
     @Test
     public void funnyJson(){
-        FunnyBean funnyBean = new FunnyBean();
-        funnyBean.setErrorMsg(Arrays.asList("我是一个人","我是两个人"));
-        funnyBean.setQuestion(Arrays.asList("1234567","1234567"));
-        funnyBean.setId("1");
+        FunnyQuestion funnyQuestion = new FunnyQuestion();
+        funnyQuestion.setErrorMsg(Arrays.asList("我是一个人","我是两个人"));
+        funnyQuestion.setQuestion(Arrays.asList("1234567","1234567"));
+        funnyQuestion.setId("1");
     }
 
 
