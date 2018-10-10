@@ -1,6 +1,7 @@
 package com.jackson.funny.utils;
 
 import com.jackson.utils.L;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
 
@@ -34,10 +35,8 @@ public class HappyLogUtil {
         }
     }
 
-
-
-
     public static void p(String msg) {
+        if(StringUtils.isEmpty(msg))return;
         System.out.println(msg);
     }
 
@@ -48,5 +47,13 @@ public class HappyLogUtil {
 
     public static void normal(String msg){
         p(msg);
+    }
+
+    public static void successMsg(String successMsg) {
+        L.console(successMsg);
+    }
+
+    public static void line() {
+        p("---------------------------------------");
     }
 }

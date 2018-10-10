@@ -22,7 +22,7 @@ public class GetDocNum extends RequestAdapter<GetDocNumBean> {
     }
 
     @Override
-    String getUrl() {
+    protected String getUrl() {
         return "http://sbgg.saic.gov.cn:9080/tmann/annInfoView/selectDocNoByUrl.html";
     }
 

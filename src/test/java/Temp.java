@@ -1,7 +1,9 @@
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jackson.domain.*;
-import com.jackson.funny.domain.FunnyQuestion;
+import com.jackson.funny.domain.FunnyBean;
 import com.jackson.request.GetDocNum;
-import com.jackson.request.GetFunny;
+import com.jackson.request.HappyRequest;
 import com.jackson.request.GetImageUrl;
 import com.jackson.request.GetTrademarkList;
 import com.jackson.utils.ChineseUtil;
@@ -225,20 +227,19 @@ public class Temp {
 
     }
 
-    @Test
-    public void getFunny(){
-        CloseableHttpClient client = HttpClients.createDefault();
-        FunnyQuestion request = new GetFunny().request(client);
-        L.i(request);
-    }
+
+
 
     @Test
-    public void funnyJson(){
-        FunnyQuestion funnyQuestion = new FunnyQuestion();
-        funnyQuestion.setErrorMsgList(Arrays.asList("我是一个人","我是两个人"));
-        funnyQuestion.setQuestionList(Arrays.asList("1234567","1234567"));
-        funnyQuestion.setId("1");
+    public void funnyJson2Obj() throws Exception {
+        String json = "{\"id\":null,\"title\":\"我是标题\",\"contentList\":[\"我是内容1\",\"我是内容2\"],\"funnyQuestionList\":[{\"id\":\"1\",\"questionList\":[\"请问人类有多少？\",\"a:13 b:14 c:16\"],\"errorMsgList\":[\"回答错误\"],\"answers\":[\"a\"],\"successChild\":null,\"errorChild\":null,\"successChildId\":\"2\",\"errorChildId\":\"1\"},{\"id\":\"2\",\"questionList\":[\"你是美女吗？\",\"a:是 b:不是\"],\"errorMsgList\":[\"回答错误\",\"回答错误！！！\"],\"answers\":[\"b\"],\"successChild\":null,\"errorChild\":null,\"successChildId\":null,\"errorChildId\":\"2\"}]} \n";
+
+        ObjectMapper mapper= new ObjectMapper();
+        FunnyBean funnyBean = mapper.readValue(json, FunnyBean.class);
+        L.d(funnyBean);
     }
+
+
 
 
 }

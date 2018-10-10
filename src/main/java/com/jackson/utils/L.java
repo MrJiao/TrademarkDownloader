@@ -1,5 +1,6 @@
 package com.jackson.utils;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -47,6 +48,7 @@ public class L {
 
 
     public static void console(String message){
+        if(StringUtils.isEmpty(message))return;
         StringBuilder sb = new StringBuilder();
         String title = "* * * * * * * * * * * * * * * * * * * * * * * * * * * *";
         sb.append(title).append(System.getProperty("line.separator"));

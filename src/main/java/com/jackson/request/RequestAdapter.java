@@ -25,7 +25,7 @@ import java.util.Map;
  */
 public abstract class RequestAdapter<T> {
 
-    abstract String getUrl();
+    protected abstract String getUrl();
 
     abstract Map<String, String> getParams();
 
@@ -107,7 +107,7 @@ public abstract class RequestAdapter<T> {
 
         @Override
         public T doFunction() throws Exception{
-            L.d("发送请求",getUrl());
+            L.d("发送请求");
             CloseableHttpResponse execute = null;
             if(StringUtils.equalsIgnoreCase(getType(),"post")){
                 execute = httpClient.execute(post(getUrl(), getParams(), getHeaders()));

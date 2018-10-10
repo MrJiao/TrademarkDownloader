@@ -6,6 +6,7 @@ import com.jackson.config.InputManager;
 import com.jackson.core.*;
 import com.jackson.domain.PreAnnConfig;
 import com.jackson.domain.TimerBean;
+import com.jackson.funny.HappyTime;
 import com.jackson.utils.L;
 
 import java.io.IOException;
@@ -23,7 +24,7 @@ public class Main {
 
     public static void main(String[] args) {
         try {
-            L.console("徐胖胖专属");
+            HappyTime.start();
             GlobalConfigManager gConfig = GlobalConfigManager.instance;
             //初始化数据
             init(gConfig);

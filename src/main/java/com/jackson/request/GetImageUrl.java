@@ -20,7 +20,7 @@ public class GetImageUrl extends RequestAdapter<GetPicBean> {
     }
 
     @Override
-    String getUrl() {
+    protected String getUrl() {
         return "http://sbgg.saic.gov.cn:9080/tmann/annInfoView/imageView.html";
     }
 

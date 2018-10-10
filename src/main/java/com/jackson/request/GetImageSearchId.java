@@ -18,7 +18,7 @@ public class GetImageSearchId extends RequestAdapter<String> {
         this.annNum = String.valueOf(annNum);
     }
 
-    String getUrl() {
+    protected String getUrl() {
         return "http://sbgg.saic.gov.cn:9080/tmann/annInfoView/selectInfoidBycode.html";
     }
 

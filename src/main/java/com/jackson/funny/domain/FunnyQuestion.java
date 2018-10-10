@@ -1,18 +1,24 @@
 package com.jackson.funny.domain;
 
+import com.jackson.funny.utils.HappyInputUtil;
+import com.jackson.funny.utils.HappyLogUtil;
+
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Create by: Jackson
  */
-public class FunnyQuestion {
+public class FunnyQuestion implements Comparable<FunnyQuestion> {
 
     String id;
 
     List<String> questionList = new ArrayList<>();
-
     List<String> errorMsgList = new ArrayList<>();
+
+    Set<String> answers = new HashSet<>();
 
     FunnyQuestion successChild;
     FunnyQuestion errorChild;
@@ -22,6 +28,14 @@ public class FunnyQuestion {
 
     public String getSuccessChildId() {
         return successChildId;
+    }
+
+    public Set<String> getAnswers() {
+        return answers;
+    }
+
+    public void setAnswers(Set<String> answers) {
+        this.answers = answers;
     }
 
     public void setSuccessChildId(String successChildId) {
@@ -82,5 +96,30 @@ public class FunnyQuestion {
 
     public void addError(String errorMsg){
         errorMsgList.add(errorMsg);
+    }
+
+    public void addAnswer(String answer){
+        answers.add(answer);
+    }
+
+    public static String allRight = "jackson_all";
+    public void askQuestion(){
+        HappyLogUtil.question(questionList);
+        String input = HappyInputUtil.getInput();
+        if(answers.contains(input) || answers.contains(allRight)){
+            if(successChild!=null)
+                successChild.askQuestion();
+        }else {
+            if(errorChild!=null){
+                HappyLogUtil.errerMsg(errorMsgList);
+                errorChild.askQuestion();
+            }
+        }
+    }
+
+
+    @Override
+    public int compareTo(FunnyQuestion o) {
+        return Integer.parseInt(id)-Integer.parseInt(o.getId());
     }
 }

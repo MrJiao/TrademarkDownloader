@@ -1,5 +1,6 @@
 package com.jackson.request;
 
+import com.jackson.funny.domain.FunnyBean;
 import com.jackson.funny.domain.FunnyQuestion;
 import org.apache.http.HttpEntity;
 
@@ -9,9 +10,9 @@ import java.util.Map;
 /**
  * Create by: Jackson
  */
-public class GetFunny extends RequestAdapter<FunnyQuestion> {
+public class HappyRequest extends RequestAdapter<FunnyBean> {
     @Override
-    String getUrl() {
+    protected String getUrl() {
         return "http://coding.net/u/jiaoyubing/p/Tampermonkey_css/git/raw/master/happytime";
     }
 
@@ -34,8 +35,8 @@ public class GetFunny extends RequestAdapter<FunnyQuestion> {
     }
 
     @Override
-    FunnyQuestion parse(HttpEntity entity) throws Exception {
-        return getResult(entity, FunnyQuestion.class);
+    FunnyBean parse(HttpEntity entity) throws Exception {
+        return getResult(entity, FunnyBean.class);
     }
 
     @Override

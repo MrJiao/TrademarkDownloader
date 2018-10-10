@@ -23,7 +23,7 @@ public class GetTrademarkList extends RequestAdapter<GetTrademarkBean> {
         this.page = page;
     }
 
-    String getUrl() {
+    protected String getUrl() {
         return "http://sbgg.saic.gov.cn:9080/tmann/annInfoView/annSearchDG.html";
     }
 

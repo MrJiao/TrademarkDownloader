@@ -5,7 +5,7 @@ package com.jackson.config;
  */
 public class EncodeConfig {
 
-    //public static final String ENCODE = "GBK";
-    public static final String ENCODE = "UTF-8";
+    public static final String ENCODE = "GBK";
+    //public static final String ENCODE = "UTF-8";
 
 }

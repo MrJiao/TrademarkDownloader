@@ -1,7 +1,6 @@
-package com.jackson.funny;
+package com.jackson.funny.utils;
 
 import com.jackson.funny.utils.HappyLogUtil;
-import com.jackson.utils.L;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.Scanner;
@@ -28,7 +27,7 @@ public class HappyInputUtil {
         return read;
     }
 
-    public static boolean getInputYesOrNO() {
+/*    public static boolean getInputYesOrNO() {
         Scanner scan = new Scanner(System.in);
         String read = null;
         while ((read = scan.nextLine()) != null) {
@@ -47,14 +46,14 @@ public class HappyInputUtil {
         } else {
             return false;
         }
-    }
+    }*/
 
     private static boolean isMatch(String input,String...msg){
-        boolean match = true;
-        if(msg==null)return match;
+        boolean match = false;
+        if(msg==null || msg.length==0)return true;
         for (String s : msg) {
-            if(!StringUtils.equalsIgnoreCase(input,s)){
-                match=false;
+            if(StringUtils.equalsIgnoreCase(input,s)){
+                match=true;
                 break;
             }
         }
