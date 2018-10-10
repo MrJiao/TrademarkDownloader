@@ -63,9 +63,9 @@
     $("body").append(mathContainer);
     var trDom2 = ['<div style="position: fixed; top: 270px;right:0px;width:160px">',
         ' <div style=" text-align:center;font-size: 20px;">	<p style="font-size: 20px;" id="current_word" >先保存</p></div>',
-        '	<input type="button" id="jackson_search"   value="搜索" style="height: 500px;width: 100px">',
+       // '	<input type="button" id="jackson_search"   value="搜索" style="height: 500px;width: 100px">',
         // '	<input type="button" id="jackson_copy"   value="复制" style="height: 500px;width: 50px">',
-        '	<input type="button" id="jackson_pre"   value="上一个" style="height: 500px;width: 50px">',
+        '	<input type="button" id="jackson_pre"   value="上一个" style="height: 60px;width: 130px">',
         '</div>'].join("");
     $("body").append(trDom2);
 
@@ -74,7 +74,7 @@
     $("#jackson_pre").on('click', jackson_pre);
 
     $("#jackson_search").on('click', jackson_search);
-    $("#jackson_btnSave").click(saveWordArr);
+    $("#jackson_btnSave").click(jacksonSaveWordArr);
 
     //按钮文案"参数配置"-->"开"
     //显示按钮"关"
@@ -82,11 +82,16 @@
     $("#btn_jackson_paramHide").on("click", toggle_click_hide);
     $("#id_exclude").on("click", jackson_exclude);
 
+
+
+
     function toggle_click_show() {
         $("#btn_jackson_paramHide").show();
         $("#jackson_paramDiv").show();
 
     }
+
+
 
     function toggle_click_hide() {
         $("#jackson_paramDiv").hide();
@@ -138,7 +143,7 @@
         setFocus();
     }
 
-    function saveWordArr() {
+    function jacksonSaveWordArr() {
         var str = $("#allText").val();
         var arr = str.split("\n");
         wordArr = arr;
@@ -146,6 +151,15 @@
         var word = myCurrentWord();
         $("#current_word").text(word);
         copyToClipboard(myCurrentWord());
+        registPaseAutoSearchListener();
+    }
+
+    function registPaseAutoSearchListener(){
+        getSearchInput().bind("input propertychang",function(event){
+            var viewName = this.value;
+            if(viewName.length ==0)return;
+            jackson_search()
+        });
     }
 
     function nextWord() {
@@ -235,6 +249,7 @@
             setFocus();
             return;
         }
+
         copyToClipboard(getNextWord());
         $(".doSearchBt.btn.btn-primary.btn-large")[0].click();
         getSearchInput().val("");
