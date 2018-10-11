@@ -73,7 +73,7 @@ public class ImageScreeningTask implements Runnable {
 
     public String getSimpleName(File file){
         String name = file.getName();
-        String s = name.split("__")[1];
+        String s = name.split("_")[1];
         String simpleName = s.split("\\.")[0];
         simpleName = ChineseUtil.removeChinese(simpleName);
 

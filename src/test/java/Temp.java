@@ -207,8 +207,8 @@ public class Temp {
 
     @Test
     public void simpleName(){
-        String name = "1614__里查德米尔RICHARD MILLE里查.jpg";
-        String s = name.split("__")[1];
+        String name = "1614_里查德米尔RICHARD MILLE里查.jpg";
+        String s = name.split("_")[1];
         String simpleName = s.split("\\.")[0];
 
 

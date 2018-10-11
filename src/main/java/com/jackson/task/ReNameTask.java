@@ -92,13 +92,14 @@ public class ReNameTask implements Runnable {
                     try {
                         FileUtils.copyFile(imageFile.getImageFile(),new File(storePath, getErrorImageName(row)));
                     } catch (IOException e1) {
-                        L.e(e);
+                        L.exception(e);
                     }
                     L.i("这个文件名不能被正确命名:",getImageName(row),"storePath",storePath);
                 }
                 rowIndex++;
             }
         }
+        taskFolderState.storeRename(true);
         L.i("重命名图片完成");
     }
 
@@ -119,7 +120,7 @@ public class ReNameTask implements Runnable {
 
     private String getImageName(Row row) {
         //return annNum + "_" + row.getPage_no() + "_" + row.getTm_name()+".jpg";
-        return annNum + "_" + "_" + row.getTm_name()+".jpg";
+        return annNum + "_" + row.getTm_name()+".jpg";
     }
 
     //当名字不能使用时，使用这个来命名文件名

@@ -13,7 +13,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 
-
 /**
  * Create by: Jackson
  */
@@ -30,35 +29,37 @@ public class GetPicNameFile implements Runnable {
 
     @Override
     public void run() {
-        L.d("开始整理图片名");
-        File[] picFiles = picfolder.listFiles(new FileFilter() {
-            @Override
-            public boolean accept(File pathname) {
-                return pathname.isFile();
-            }
-        });
-
-        ArrayList<String> arr = new ArrayList<>();
-        for (File picFile : picFiles) {
-            String simpleName = getSimpleName(picFile);
-            if(StringUtils.isEmpty(simpleName))continue;
-            arr.add(simpleName);
-        }
+        L.i("开始整理图片名");
         try {
+            File[] picFiles = picfolder.listFiles(new FileFilter() {
+                @Override
+                public boolean accept(File pathname) {
+                    String name = pathname.getName();
+                    return name.endsWith("jpg")&&!name.contains("被神秘力量隐藏了文件名");
+                }
+            });
+
+            ArrayList<String> arr = new ArrayList<>();
+            for (File picFile : picFiles) {
+                String simpleName = getSimpleName(picFile);
+                if (StringUtils.isEmpty(simpleName)) continue;
+                arr.add(simpleName);
+            }
+
             FileUtils.writeLines(
-                    new File( AnnConfigManager.instance.getPicNameFilePath(taskFolderState))
-                    ,arr,false);
+                    new File(AnnConfigManager.instance.getPicNameFilePath(taskFolderState))
+                    , arr, false);
             taskFolderState.storeGetPicNameFile(true);
-            L.d("整理图片名完成");
+            L.i("整理图片名完成");
         } catch (IOException e) {
-            L.e(e);
+            L.exception(e);
             L.e("整理图片名失败");
         }
     }
 
-    public String getSimpleName(File file){
+    public String getSimpleName(File file) {
         String name = file.getName();
-        String s = name.split("__")[1];
+        String s = name.split("_")[1];
         String simpleName = s.split("\\.")[0];
         simpleName = ChineseUtil.removeChinese(simpleName);
 

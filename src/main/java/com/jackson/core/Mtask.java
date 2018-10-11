@@ -129,7 +129,7 @@ public class Mtask implements Runnable {
         String imageFolderPath = taskFolderState.getFolderPath();
         String trademarkRowFilePath = AnnConfigManager.instance.getTrademarkRowFilePath(taskFolderState);
         new ReNameTask(imageFolderPath, trademarkRowFilePath, taskFolderState).run();
-        taskFolderState.storeRename(true);
+
     }
 
 
