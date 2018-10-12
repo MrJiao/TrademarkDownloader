@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         爱心小拳拳
 // @namespace    http://tampermonkey.net/
-// @version      2018.10.09
+// @version      2018.10.12
 // @description  爱心小拳拳
 // @author       Jackson
 // @match        https://euipo.europa.eu/eSearch/
@@ -19,7 +19,7 @@
         // '<div id="jackson_paramDiv" style="position: fixed;top: 50px;right:-350px;border: 0px solid;">',
         '<div id="jackson_paramDiv" style="position: fixed;top: 90px;right:15px;border: 0px solid;display:none">',
         '    <div style="">',
-        '        <p>全部参数</p >',
+        '        <p>全部参数 总数：<b id="id_word_total">0</b></p>',
         '        <textarea id="allText" style="height: 100px;width: 130px"></textarea>',
         '		<br>',
         '    </div>',
@@ -31,7 +31,8 @@
     var resultHaveDivStr = ['<div id="jackson_resultHave" style="position: fixed;top: 50px;left:5px;border: 0px solid;">',
         '    <div style="">',
         '        <p>搜索有结果的名称</p >',
-        '        <textarea id="jackson_resultHave_textarea" style="height: 100px;width: 130px"></textarea>',
+        '        <p>个数:<b id="id_world_have_count"></b></p >',
+        '        <textarea id="jackson_resultHave_textarea" style="height: 60px;width: 130px"></textarea>',
         '		<br>',
         '    </div>',
         '</div>'
@@ -40,7 +41,8 @@
     var resultNoneDivStr = ['<div id="jackson_resultNone" style="position: fixed;top: 200px;left:5px;border: 0px solid;">',
         '    <div style="">',
         '        <p>搜索无结果的名称</p >',
-        '        <textarea id="jackson_resultNone_textarea" style="height: 100px;width: 130px"></textarea>',
+        '        <p>个数:<b id="id_world_none_count"></b></p >',
+        '        <textarea id="jackson_resultNone_textarea" style="height: 60px;width: 130px"></textarea>',
         '		<br>',
         '    </div>',
         '</div>'
@@ -62,6 +64,8 @@
     $("body").append(resultNoneDivStr);
     $("body").append(mathContainer);
     var trDom2 = ['<div style="position: fixed; top: 270px;right:0px;width:160px">',
+        ' <p >当前位置:<b id="id_world_current_position">0</b></p>',
+        ' <p >剩下个数:<b id="id_world_remain">0</b></p>',
         ' <div style=" text-align:center;font-size: 20px;">	<p style="font-size: 20px;" id="current_word" >先保存</p></div>',
        // '	<input type="button" id="jackson_search"   value="搜索" style="height: 500px;width: 100px">',
         // '	<input type="button" id="jackson_copy"   value="复制" style="height: 500px;width: 50px">',
@@ -150,6 +154,7 @@
         word_position = 0;
         var word = myCurrentWord();
         $("#current_word").text(word);
+        $("#id_word_total").text(arr.length);
         copyToClipboard(myCurrentWord());
         registPaseAutoSearchListener();
     }
@@ -219,14 +224,13 @@
         mTextarear.val(mTextarear.val() + msg + "\r\n");
     }
 
-
     function jackson_Have() {
         var mCurrentWord = myCurrentWord();
         appendWord("#jackson_resultHave_textarea", mCurrentWord);
         console.log("jackson_Has currentWord:" + mCurrentWord);
-        var word = nextWord();
+        $("#id_world_have_count").text(getTextareaWorldCount("#jackson_resultHave_textarea"));
 
-        $("#current_word").text(word);
+        jackson_next();
         auto_pre_search();
     }
 
@@ -234,10 +238,24 @@
         var mCurrentWord = myCurrentWord();
         appendWord("#jackson_resultNone_textarea", mCurrentWord);
         console.log("jackson_None currentWord:" + mCurrentWord);
-        var word = nextWord();
-        $("#current_word").text(word);
+        $("#id_world_none_count").text(getTextareaWorldCount("#jackson_resultNone_textarea"));
+        jackson_next();
         auto_pre_search();
     }
+
+    function getTextareaWorldCount(textarea_id){
+        var str = $(textarea_id).val();
+        var arr = str.split("\n");
+        return arr.length-1;
+    }
+
+    function jackson_next(){
+        var word = nextWord();
+        $("#current_word").text(word);
+        $("#id_world_current_position").text(word_position+1);
+        $("#id_world_remain").text(wordArr.length-word_position);
+    }
+
 
     function jackson_search() {
         var jqSearchInput = getSearchInput();
