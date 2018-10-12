@@ -41,9 +41,14 @@ public class GetPicNameFile implements Runnable {
 
             ArrayList<String> arr = new ArrayList<>();
             for (File picFile : picFiles) {
-                String simpleName = getSimpleName(picFile);
-                if (StringUtils.isEmpty(simpleName)) continue;
-                arr.add(simpleName);
+                try {
+                    String simpleName = getSimpleName(picFile);
+                    if (StringUtils.isEmpty(simpleName)) continue;
+                    arr.add(simpleName);
+                }catch (Exception e){
+                    L.e("整理图片名失败",picFile.getAbsolutePath());
+                }
+
             }
 
             FileUtils.writeLines(
