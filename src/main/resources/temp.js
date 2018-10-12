@@ -179,7 +179,7 @@
 
 
     function getNextWord() {
-        temp_word_position = word_position;
+        var temp_word_position = word_position;
         temp_word_position++;
         if (temp_word_position > wordArr.length - 1) {
             temp_word_position = wordArr.length - 1;
