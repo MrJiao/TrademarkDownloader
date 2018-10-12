@@ -2,7 +2,6 @@ package com.jackson.funny.test;
 
 import com.jackson.funny.domain.FunnyBean;
 import com.jackson.funny.domain.FunnyQuestion;
-import com.jackson.funny.test.question.Question2;
 import com.jackson.funny.utils.HappyLogUtil;
 import com.jackson.utils.L;
 import org.apache.commons.lang3.StringUtils;
@@ -14,7 +13,7 @@ import java.util.List;
  */
 public class QuestionTest {
 
-    private static FunnyBean funnyBean = new Question2().get();
+    private static FunnyBean funnyBean = new ChooseQuestion().question;
     public static void main(String[] args){
         checkId();
         checkLoop();
@@ -43,7 +42,6 @@ public class QuestionTest {
         funnyBean.askQuestion();
         HappyLogUtil.successMsg(funnyBean.getSuccessMsg());
     }
-
 
     public static void checkId(){
         List<FunnyQuestion> funnyQuestionList = funnyBean.getFunnyQuestionList();

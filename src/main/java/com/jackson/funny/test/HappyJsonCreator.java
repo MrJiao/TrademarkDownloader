@@ -16,7 +16,7 @@ public class HappyJsonCreator {
 
     public static void main(String[] args) throws JsonProcessingException {
         ObjectMapper mapper= new ObjectMapper();
-        FunnyBean funnyBean = new Question2().get();
+        FunnyBean funnyBean = new ChooseQuestion().question;
         funnyBean.setUse(true);
         String s = mapper.writeValueAsString(funnyBean);
         L.d(s);

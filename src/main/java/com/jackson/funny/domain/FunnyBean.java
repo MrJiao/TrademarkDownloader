@@ -97,6 +97,7 @@ public class FunnyBean {
 
     public void askQuestion() {
         //因为问题是连贯，一个接着一个的，是有顺序的
+        if(getFunnyQuestionList().size()==0)return;
         FunnyQuestion funnyQuestion = getFunnyQuestionList().get(0);
         funnyQuestion.askQuestion();
     }
