@@ -64,10 +64,9 @@ public class GetPicNameFile implements Runnable {
 
     public String getSimpleName(File file) {
         String name = file.getName();
-        String s = name.split("_")[1];
+        String s = name.split("_")[2];
         String simpleName = s.split("\\.")[0];
         simpleName = ChineseUtil.removeChinese(simpleName);
-
         return simpleName.trim();
     }
 }

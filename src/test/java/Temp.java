@@ -239,6 +239,20 @@ public class Temp {
         L.d(funnyBean);
     }
 
+    @Test
+    public void nameTest(){
+     String name = "1614_12_辅导费xxx.jpg";
+        String simpleName = getSimpleName(name);
+        L.d(simpleName);
+    }
+
+    public String getSimpleName(String name) {
+        String s = name.split("_")[2];
+        String simpleName = s.split("\\.")[0];
+        simpleName = ChineseUtil.removeChinese(simpleName);
+        return simpleName.trim();
+    }
+
 
 
 

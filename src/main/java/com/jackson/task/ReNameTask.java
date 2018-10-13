@@ -119,8 +119,8 @@ public class ReNameTask implements Runnable {
     }
 
     private String getImageName(Row row) {
-        //return annNum + "_" + row.getPage_no() + "_" + row.getTm_name()+".jpg";
-        return annNum + "_" + row.getTm_name()+".jpg";
+        return annNum + "_" + row.getPage_no() + "_" + row.getTm_name()+".jpg";
+       // return annNum + "_" + row.getTm_name()+".jpg";
     }
 
     //当名字不能使用时，使用这个来命名文件名
