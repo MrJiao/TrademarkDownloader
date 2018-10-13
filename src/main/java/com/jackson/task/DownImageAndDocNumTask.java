@@ -34,6 +34,7 @@ public class DownImageAndDocNumTask implements Runnable {
 
     @Override
     public void run() {
+        L.i("开始下载图片");
 
         List<String> urlList = MyRetryTemplate.retryTemplate(3,1000,new MyRetryTemplate.RetryCallback<List<String>>() {
             @Override
@@ -51,6 +52,8 @@ public class DownImageAndDocNumTask implements Runnable {
         }
 
         callBack.downloadSuccess(urlList,getDocNumBeanList);
+
+        L.i("下载图片完成");
     }
 
     private class GetDocRetryCallback implements MyRetryTemplate.RetryCallback<Void>{

@@ -103,13 +103,12 @@ public class Mtask implements Runnable {
 
 
     private void downloadImage(TaskFolderState taskFolderState) {
-        L.i("开始下载图片");
         DownImageDispatcher.doFunction(
                 client,
                 new MyDownloadAndImageDocNumCallback(taskFolderState),
                 new File(taskFolderState.getFolderPath()),
                 new File(AnnConfigManager.instance.getImageUrlFilePath(taskFolderState)));
-        L.i("下载图片完成");
+
     }
 
 

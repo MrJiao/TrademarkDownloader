@@ -51,7 +51,7 @@ public class ImageScreeningTask implements Runnable {
             @Override
             public boolean accept(File pathname) {
                 String name = pathname.getName();
-                return name.endsWith("jpg");
+                return name.endsWith("jpg")&&!name.contains("被神秘力量隐藏了文件名");
             }
         });
 
