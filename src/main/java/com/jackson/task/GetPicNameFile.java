@@ -11,6 +11,7 @@ import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 
 
 /**
@@ -35,20 +36,19 @@ public class GetPicNameFile implements Runnable {
                 @Override
                 public boolean accept(File pathname) {
                     String name = pathname.getName();
-                    return name.endsWith("jpg")&&!name.contains("被神秘力量隐藏了文件名");
+                    return name.endsWith("jpg") && !name.contains("被神秘力量隐藏了文件名");
                 }
             });
 
-            ArrayList<String> arr = new ArrayList<>();
+            HashSet<String> arr = new HashSet<>();
             for (File picFile : picFiles) {
                 try {
                     String simpleName = getSimpleName(picFile);
-                    if (StringUtils.isEmpty(simpleName)) continue;
+                    if (StringUtils.isEmpty(simpleName)|| simpleName.length()<4) continue;
                     arr.add(simpleName);
-                }catch (Exception e){
-                    L.e("整理图片名失败",picFile.getAbsolutePath());
+                } catch (Exception e) {
+                    L.e("整理图片名失败", picFile.getAbsolutePath());
                 }
-
             }
 
             FileUtils.writeLines(
