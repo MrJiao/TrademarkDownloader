@@ -11,7 +11,10 @@ import org.apache.commons.lang3.StringUtils;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Create by: Jackson
@@ -55,19 +58,57 @@ public class ImageScreeningTask implements Runnable {
             }
         });
 
-        for (File imageFile : imageFiles) {
-            for (String imageName : imageNames) {
-                if(StringUtils.equals(imageName,getSimpleName(imageFile))){
+        Map<String, List<File>> copyFile = getCopyFile(imageFiles, imageNames);
+
+        for (Map.Entry<String, List<File>> entry : copyFile.entrySet()) {
+            List<File> value = entry.getValue();
+            for (int i=0;i<value.size();i++) {
+                if(value.size()==1){
                     try {
-                        FileUtils.copyFile(imageFile,new File(imageScreeningFolder,imageFile.getName()));
+                        FileUtils.copyFile(value.get(i),new File(imageScreeningFolder,entry.getKey()));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }else {
+                    try {
+                        FileUtils.copyFile(value.get(i),new File(imageScreeningFolder,entry.getKey()+"("+i+1+").jpg"));
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                 }
+
             }
         }
         taskFolderState.storeImageScreening(true);
         L.i("筛选图片完成");
+    }
+
+
+    private Map<String,List<File>> getCopyFile(File[] imageFiles,List<String> imageNames){
+        HashMap<String, List<File>> map = new HashMap<>();
+        for (File imageFile : imageFiles) {
+
+            for (String imageName : imageNames) {
+                if(StringUtils.equals(imageName,getSimpleName(imageFile))){
+                    String name = getName(imageFile);
+                    List<File> files = map.get(name);
+                    if(files == null){
+                        files = new ArrayList<>();
+                        map.put(name,files);
+                    }
+                    files.add(imageFile);
+                }
+            }
+        }
+        return map;
+    }
+
+    private String getName(File imageFile){
+        String name = imageFile.getName();
+        String[] s = name.split("_");
+        s[2]=s[2].split("\\.")[0];
+        name = s[0]+"_"+s[2];
+        return name;
     }
 
 

@@ -253,6 +253,15 @@ public class Temp {
         return simpleName.trim();
     }
 
+    @Test
+    public void getName(){
+        String name = "1614_12_辅导费xxx.jpg";
+        String[] s = name.split("_");
+        s[2]=s[2].split("\\.")[0];
+        name = s[0]+"_"+s[2];
+        L.d(name);
+    }
+
 
 
 
